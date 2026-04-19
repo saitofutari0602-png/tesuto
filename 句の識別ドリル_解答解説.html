@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>句識別ドリル 解説</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:   #4285F4;
+  --red:    #EA4335;
+  --yellow: #FBBC04;
+  --green:  #34A853;
+  --blue-light: #E8F0FE;
+  --red-light:  #FCE8E6;
+  --yellow-light: #FEF7E0;
+  --green-light:  #E6F4EA;
+  --text:   #202124;
+  --text2:  #5F6368;
+  --border: #DADCE0;
+  --bg:     #F8F9FA;
+  --card:   #FFFFFF;
+  --nav-w:  260px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  width: var(--nav-w);
+  background: var(--card);
+  border-right: 1px solid var(--border);
+  position: fixed; top: 0; left: 0; bottom: 0;
+  overflow-y: auto;
+  z-index: 100;
+  display: flex; flex-direction: column;
+}
+.sidebar-logo {
+  padding: 20px 20px 12px;
+  display: flex; align-items: center; gap: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.logo-dots {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 3px; width: 22px;
+}
+.logo-dots span {
+  width: 9px; height: 9px; border-radius: 50%;
+}
+.logo-title { font-size: 15px; font-weight: 700; color: var(--text); }
+.logo-sub   { font-size: 11px; color: var(--text2); margin-top: 1px; }
+
+.nav-section { padding: 12px 0 4px; }
+.nav-section-label {
+  font-size: 10px; font-weight: 700; color: var(--text2);
+  letter-spacing: 1px; padding: 0 20px 6px;
+  text-transform: uppercase;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 20px;
+  font-size: 13px; color: var(--text2);
+  cursor: pointer;
+  border-radius: 0 24px 24px 0;
+  margin-right: 12px;
+  transition: all 0.15s;
+  text-decoration: none;
+}
+.nav-item:hover { background: var(--bg); color: var(--text); }
+.nav-item.active { background: var(--blue-light); color: var(--blue); font-weight: 700; }
+.nav-badge {
+  margin-left: auto;
+  width: 20px; height: 20px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: #fff;
+}
+
+/* ── Main ── */
+.main {
+  margin-left: var(--nav-w);
+  flex: 1;
+  padding: 32px 40px;
+  max-width: 900px;
+}
+
+/* ── Page Header ── */
+.page-header {
+  margin-bottom: 28px;
+}
+.page-header h1 {
+  font-size: 28px; font-weight: 700; color: var(--text);
+  font-family: 'Google Sans', sans-serif;
+  margin-bottom: 6px;
+}
+.page-header p { font-size: 14px; color: var(--text2); line-height: 1.7; }
+
+/* ── Rule Card ── */
+.rule-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 28px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.rule-card h2 {
+  font-size: 16px; font-weight: 700;
+  font-family: 'Google Sans', sans-serif;
+  margin-bottom: 16px; color: var(--text);
+  display: flex; align-items: center; gap: 8px;
+}
+.steps-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+.step-item {
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 12px 10px;
+  text-align: center;
+}
+.step-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: #fff;
+  margin-bottom: 8px;
+}
+.step-item p { font-size: 11px; color: var(--text2); line-height: 1.5; }
+.step-item strong { font-size: 12px; color: var(--text); display: block; margin-bottom: 4px; }
+
+.usage-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 10px; margin-top: 0;
+}
+.usage-card {
+  border-radius: 8px; padding: 14px;
+  border: 1.5px solid;
+}
+.usage-card h3 { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+.usage-card p { font-size: 11px; line-height: 1.6; }
+.usage-card.noun   { background: var(--blue-light);   border-color: var(--blue);   color: #1558b0; }
+.usage-card.adj    { background: var(--green-light);  border-color: var(--green);  color: #1e7e34; }
+.usage-card.adv    { background: var(--yellow-light); border-color: var(--yellow); color: #7a5c00; }
+
+/* ── Section ── */
+.section { margin-bottom: 40px; }
+.section-title {
+  font-size: 20px; font-weight: 700;
+  font-family: 'Google Sans', sans-serif;
+  color: var(--text); margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+}
+
+/* ── Problem Card ── */
+.problem-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  overflow: hidden;
+}
+.problem-header {
+  padding: 16px 20px;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 12px;
+  transition: background 0.15s;
+  user-select: none;
+}
+.problem-header:hover { background: var(--bg); }
+.problem-num {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: #fff;
+  flex-shrink: 0;
+}
+.problem-sentence {
+  font-size: 15px; font-style: italic; flex: 1;
+  color: var(--text); line-height: 1.5;
+}
+.problem-tags { display: flex; gap: 6px; flex-shrink: 0; }
+.tag {
+  padding: 3px 10px; border-radius: 12px;
+  font-size: 11px; font-weight: 700;
+  border: 1.5px solid;
+}
+.tag.noun   { background: var(--blue-light);   border-color: var(--blue);   color: var(--blue); }
+.tag.adj    { background: var(--green-light);  border-color: var(--green);  color: var(--green); }
+.tag.adv    { background: var(--yellow-light); border-color: var(--yellow); color: #7a5c00; }
+.tag.role   { background: #F1F3F4; border-color: #9AA0A6; color: #444; }
+
+.chevron {
+  font-size: 18px; color: var(--text2); transition: transform 0.25s;
+  flex-shrink: 0;
+}
+.problem-card.open .chevron { transform: rotate(180deg); }
+
+.problem-body {
+  border-top: 1px solid var(--border);
+  padding: 20px;
+  display: none;
+}
+.problem-card.open .problem-body { display: block; }
+
+/* Sentence display */
+.sentence-display {
+  background: var(--bg);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+  font-size: 18px;
+  font-style: italic;
+  line-height: 2.0;
+  text-align: center;
+  position: relative;
+}
+.chunk {
+  display: inline;
+  background: rgba(66,133,244,0.12);
+  border: 2px solid var(--blue);
+  border-radius: 6px;
+  padding: 2px 4px;
+  color: var(--blue);
+  font-weight: 700;
+}
+.chunk.adj-chunk {
+  background: rgba(52,168,83,0.12);
+  border-color: var(--green);
+  color: #1e7e34;
+}
+.chunk.adv-chunk {
+  background: rgba(251,188,4,0.15);
+  border-color: var(--yellow);
+  color: #7a5c00;
+}
+.v-mark { color: var(--red); font-weight: 700; }
+.v-sub {
+  font-size: 10px; font-weight: 700; color: var(--red);
+  vertical-align: super; font-style: normal;
+}
+
+/* Steps answer */
+.steps-answer {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 10px; margin-bottom: 14px;
+}
+.step-ans {
+  background: var(--bg);
+  border-radius: 8px; padding: 12px 14px;
+  border-left: 3px solid var(--border);
+}
+.step-ans-label { font-size: 10px; font-weight: 700; color: var(--text2); letter-spacing: 1px; margin-bottom: 4px; }
+.step-ans-val   { font-size: 15px; font-weight: 700; color: var(--text); }
+.step-ans-val .chip {
+  display: inline-block;
+  padding: 2px 10px; border-radius: 10px;
+  font-size: 13px; font-weight: 700;
+}
+
+/* Reasoning */
+.reasoning { font-size: 13px; color: var(--text2); line-height: 1.8; }
+.reasoning h4 { font-size: 12px; font-weight: 700; color: var(--text); margin: 10px 0 4px; letter-spacing: 0.5px; }
+.reasoning .q  { color: var(--blue); font-weight: 700; }
+.mistake-box {
+  background: var(--red-light);
+  border-left: 3px solid var(--red);
+  border-radius: 0 8px 8px 0;
+  padding: 10px 14px; margin-top: 10px;
+  font-size: 12px; line-height: 1.7; color: #b31412;
+}
+.mistake-box strong { display: block; margin-bottom: 3px; }
+.note-box {
+  background: var(--blue-light);
+  border-left: 3px solid var(--blue);
+  border-radius: 0 8px 8px 0;
+  padding: 10px 14px; margin-top: 10px;
+  font-size: 12px; line-height: 1.7; color: #1558b0;
+}
+
+/* Scroll target */
+[id] { scroll-margin-top: 24px; }
+</style>
+</head>
+<body>
+
+<!-- ─── SIDEBAR ─── -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-dots">
+      <span style="background:#4285F4"></span>
+      <span style="background:#EA4335"></span>
+      <span style="background:#FBBC04"></span>
+      <span style="background:#34A853"></span>
+    </div>
+    <div>
+      <div class="logo-title">句識別ドリル</div>
+      <div class="logo-sub">解説・答え合わせ</div>
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">基礎</div>
+    <a class="nav-item active" href="#rules" onclick="setActive(this)">
+      📋 判定ルール
+    </a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-label">第2部 例題</div>
+    <a class="nav-item" href="#set1" onclick="setActive(this)">
+      セット1 <span class="nav-badge" style="background:#4285F4">3</span>
+    </a>
+    <a class="nav-item" href="#set2" onclick="setActive(this)">
+      セット2 <span class="nav-badge" style="background:#34A853">3</span>
+    </a>
+    <a class="nav-item" href="#set3" onclick="setActive(this)">
+      セット3 <span class="nav-badge" style="background:#FBBC04">3</span>
+    </a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-label">第3部 演習</div>
+    <a class="nav-item" href="#ex1"  onclick="setActive(this)">問1</a>
+    <a class="nav-item" href="#ex2"  onclick="setActive(this)">問2</a>
+    <a class="nav-item" href="#ex3"  onclick="setActive(this)">問3</a>
+    <a class="nav-item" href="#ex4"  onclick="setActive(this)">問4</a>
+    <a class="nav-item" href="#ex5"  onclick="setActive(this)">問5</a>
+    <a class="nav-item" href="#ex6"  onclick="setActive(this)">問6</a>
+    <a class="nav-item" href="#ex7"  onclick="setActive(this)">問7</a>
+    <a class="nav-item" href="#ex8"  onclick="setActive(this)">問8</a>
+    <a class="nav-item" href="#ex9"  onclick="setActive(this)">問9</a>
+    <a class="nav-item" href="#ex10" onclick="setActive(this)">問10</a>
+  </div>
+</nav>
+
+<!-- ─── MAIN ─── -->
+<main class="main">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1>句識別ドリル　解説</h1>
+    <p>「位置が働きを決める」という原則を全問で確認しよう。チャンク（□）を外して骨格を見抜くことが鍵。</p>
+  </div>
+
+  <!-- Rules -->
+  <div id="rules" class="section">
+    <div class="section-title">
+      <span style="background:#4285F4;color:#fff;border-radius:50%;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;">📋</span>
+      判定ルール まとめ
+    </div>
+    <div class="rule-card">
+      <h2>基本5ステップ</h2>
+      <div class="steps-grid">
+        <div class="step-item">
+          <div class="step-num" style="background:#4285F4">1</div>
+          <strong>句の範囲を □ で囲む</strong>
+          <p>まずブロック全体を認識する</p>
+        </div>
+        <div class="step-item">
+          <div class="step-num" style="background:#EA4335">2</div>
+          <strong>用法を判定する</strong>
+          <p>名詞句 / 形容詞句 / 副詞句</p>
+        </div>
+        <div class="step-item">
+          <div class="step-num" style="background:#FBBC04">3</div>
+          <strong>S/O/C/M を判定</strong>
+          <p>名詞句→S/O/C<br>その他→M</p>
+        </div>
+        <div class="step-item">
+          <div class="step-num" style="background:#34A853">4</div>
+          <strong>修飾矢印を書く</strong>
+          <p>形容詞句→前の名詞<br>副詞句→動詞・文全体</p>
+        </div>
+        <div class="step-item">
+          <div class="step-num" style="background:#5F6368">5</div>
+          <strong>文型 SVOC</strong>
+          <p>残った骨格に文型を振る</p>
+        </div>
+      </div>
+    </div>
+    <div class="rule-card">
+      <h2>位置 → 用法 の原則</h2>
+      <div class="usage-grid">
+        <div class="usage-card noun">
+          <h3>🔵 名詞句</h3>
+          <p><strong>S・O・C になる</strong><br>文頭（S）／動詞直後（O）／be動詞直後（C）<br><br>→ 文の骨格に組み込まれる</p>
+        </div>
+        <div class="usage-card adj">
+          <h3>🟢 形容詞句</h3>
+          <p><strong>名詞を後ろから修飾（M）</strong><br>名詞の直後に置かれる<br><br>→ 「どんな〇〇か」を限定する</p>
+        </div>
+        <div class="usage-card adv">
+          <h3>🟡 副詞句（分詞構文）</h3>
+          <p><strong>動詞・文全体を修飾（M）</strong><br>文頭＋コンマ が目印<br><br>→ 主節の状況・理由・条件を表す</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SET 1 -->
+  <div id="set1" class="section">
+    <div class="section-title">
+      <span style="background:#4285F4;color:#fff;border-radius:8px;padding:4px 12px;font-size:14px;">セット1</span>
+      Listening to good music
+    </div>
+
+    <!-- (1) -->
+    <div class="problem-card open" id="p1">
+      <div class="problem-header" onclick="toggle('p1')">
+        <div class="problem-num" style="background:#4285F4">(1)</div>
+        <div class="problem-sentence">Listening to good music is good for mental health.</div>
+        <div class="problem-tags">
+          <span class="tag noun">名詞句</span>
+          <span class="tag role">S → SVC</span>
+        </div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="problem-body">
+        <div class="sentence-display">
+          <span class="chunk">[Listening to good music]</span>
+          &nbsp;<span class="v-mark">is</span><span class="v-sub">V</span>&nbsp;good for mental health.
+        </div>
+        <div class="steps-answer">
+          <div class="step-ans" style="border-color:#4285F4">
+            <div class="step-ans-label">STEP 1-2　用法</div>
+            <div class="step-ans-val"><span class="chip" style="background:#E8F0FE;color:#4285F4">名詞句</span></div>
+          </div>
+          <div class="step-ans" style="border-color:#FBBC04">
+            <div class="step-ans-label">STEP 3-4　役割 / 修飾先</div>
+            <div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">S</span> &nbsp;修飾先：なし</div>
+          </div>
+          <div class="step-ans" style="border-color:#34A853">
+            <div class="step-ans-label">STEP 5　文型</div>
+            <div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">SVC</span></div>
+          </div>
+        </div>
+        <div class="reasoning">
+          <h4>Q. なぜ名詞句か？</h4>
+          動詞 <em>is</em> の前にあり、主語（S）の位置を占めている。名詞でなければ主語にはなれない。
+          <h4>Q. なぜ is が V か？</h4>
+          [Listening to good music] のブロックを外すと「□ is good for mental health」が残る。文全体の動詞は <strong>is</strong> のみ。
+          <h4>Q. なぜ SVC か？</h4>
+          is の後ろの <em>good</em> は形容詞 → C（補語）。<em>for mental health</em> は前置詞句（副詞句）でM。
+          <div class="mistake-box">
+            <strong>✕ よくある誤り：Listening を V と判断する</strong>
+            動名詞は「名詞として働くing形」。文の骨格（SVOC）のV にはならない。本物のV は <strong>is</strong>。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- (2) -->
+    <div class="problem-card" id="p2">
+      <div class="problem-header" onclick="toggle('p2')">
+        <div class="problem-num" style="background:#4285F4">(2)</div>
+        <div class="problem-sentence">People listening to good music look happy.</div>
+        <div class="problem-tags">
+          <span class="tag adj">形容詞句</span>
+          <span class="tag role">M → People</span>
+        </div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="problem-body">
+        <div class="sentence-display">
+          People <span class="chunk adj-chunk">[listening to good music]</span>
+          &nbsp;<span class="v-mark">look</span><span class="v-sub">V</span>&nbsp;happy.
+        </div>
+        <div class="steps-answer">
+          <div class="step-ans" style="border-color:#34A853">
+            <div class="step-ans-label">STEP 1-2　用法</div>
+            <div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">形容詞句</span></div>
+          </div>
+          <div class="step-ans" style="border-color:#FBBC04">
+            <div class="step-ans-label">STEP 3-4　役割 / 修飾先</div>
+            <div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">M</span> &nbsp;→ People</div>
+          </div>
+          <div class="step-ans" style="border-color:#34A853">
+            <div class="step-ans-label">STEP 5　文型</div>
+            <div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">SVC</span></div>
+          </div>
+        </div>
+        <div class="reasoning">
+          <h4>Q. なぜ形容詞句か？</h4>
+          名詞 <em>People</em> の直後に置かれ、どんな People かを限定している。名詞を修飾する働き＝形容詞句。
+          <h4>Q. なぜ look が V か？</h4>
+          [listening to good music] を外すと「People look happy」。文全体の動詞は <strong>look</strong>。
+          <h4>Q. なぜ SVC か？</h4>
+          look は「〜に見える」の意味で後ろに形容詞 <em>happy</em> → C。
+          <div class="mistake-box">
+            <strong>✕ よくある誤り：(1)と同じく名詞句と判断する</strong>
+            (1) は文頭にあったが、(2) は名詞 People の<strong>直後</strong>にある。「位置→働き」の原則：名詞直後＝形容詞句。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- (3) -->
+    <div class="problem-card" id="p3">
+      <div class="problem-header" onclick="toggle('p3')">
+        <div class="problem-num" style="background:#4285F4">(3)</div>
+        <div class="problem-sentence">Listening to good music, he is happy.</div>
+        <div class="problem-tags">
+          <span class="tag adv">副詞句</span>
+          <span class="tag role">M → is</span>
+        </div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="problem-body">
+        <div class="sentence-display">
+          <span class="chunk adv-chunk">[Listening to good music,]</span>
+          &nbsp;he &nbsp;<span class="v-mark">is</span><span class="v-sub">V</span>&nbsp;happy.
+        </div>
+        <div class="steps-answer">
+          <div class="step-ans" style="border-color:#FBBC04">
+            <div class="step-ans-label">STEP 1-2　用法</div>
+            <div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">副詞句</span></div>
+          </div>
+          <div class="step-ans" style="border-color:#FBBC04">
+            <div class="step-ans-label">STEP 3-4　役割 / 修飾先</div>
+            <div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">M</span> &nbsp;→ is（文全体）</div>
+          </div>
+          <div class="step-ans" style="border-color:#34A853">
+            <div class="step-ans-label">STEP 5　文型</div>
+            <div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">SVC</span></div>
+          </div>
+        </div>
+        <div class="reasoning">
+          <h4>Q. なぜ副詞句（分詞構文）か？</h4>
+          文頭に置かれ、<strong>コンマで主節と切られている</strong>。名詞でも形容詞でもない位置 → 副詞句。「その他全部＝M」の原則。
+          <h4>Q. なぜ is が V か？</h4>
+          ブロックを外すと「he is happy」。文全体の動詞は <strong>is</strong>。
+          <div class="mistake-box">
+            <strong>✕ よくある誤り：コンマを無視して (1) と同じ構造と考える</strong>
+            コンマは構造の境界を示す文法信号。もし Listening が S なら動詞が2つ並ぶことになり文として成立しない。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SET 2 -->
+  <div id="set2" class="section">
+    <div class="section-title">
+      <span style="background:#34A853;color:#fff;border-radius:8px;padding:4px 12px;font-size:14px;">セット2</span>
+      Reading English books every day
+    </div>
+
+    <div class="problem-card" id="p4">
+      <div class="problem-header" onclick="toggle('p4')">
+        <div class="problem-num" style="background:#34A853">(4)</div>
+        <div class="problem-sentence">Reading English books every day improves your vocabulary.</div>
+        <div class="problem-tags">
+          <span class="tag noun">名詞句</span>
+          <span class="tag role">S → SVO</span>
+        </div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="problem-body">
+        <div class="sentence-display">
+          <span class="chunk">[Reading English books every day]</span>
+          &nbsp;<span class="v-mark">improves</span><span class="v-sub">V</span>&nbsp;your vocabulary.
+        </div>
+        <div class="steps-answer">
+          <div class="step-ans" style="border-color:#4285F4"><div class="step-ans-label">用法</div><div class="step-ans-val"><span class="chip" style="background:#E8F0FE;color:#4285F4">名詞句</span></div></div>
+          <div class="step-ans" style="border-color:#FBBC04"><div class="step-ans-label">役割 / 修飾先</div><div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">S</span> &nbsp;修飾先：なし</div></div>
+          <div class="step-ans" style="border-color:#34A853"><div class="step-ans-label">文型</div><div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">SVO</span></div></div>
+        </div>
+        <div class="reasoning">
+          文頭に動名詞句 → 主語（S）の名詞句。ブロックを外すと「□ improves your vocabulary」。<em>improves</em> が V、<em>your vocabulary</em> が O → SVO。
+        </div>
+      </div>
+    </div>
+
+    <div class="problem-card" id="p5">
+      <div class="problem-header" onclick="toggle('p5')">
+        <div class="problem-num" style="background:#34A853">(5)</div>
+        <div class="problem-sentence">Students reading English books every day improve their vocabulary.</div>
+        <div class="problem-tags">
+          <span class="tag adj">形容詞句</span>
+          <span class="tag role">M → Students</span>
+        </div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="problem-body">
+        <div class="sentence-display">
+          Students <span class="chunk adj-chunk">[reading English books every day]</span>
+          &nbsp;<span class="v-mark">improve</span><span class="v-sub">V</span>&nbsp;their vocabulary.
+        </div>
+        <div class="steps-answer">
+          <div class="step-ans" style="border-color:#34A853"><div class="step-ans-label">用法</div><div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">形容詞句</span></div></div>
+          <div class="step-ans" style="border-color:#FBBC04"><div class="step-ans-label">役割 / 修飾先</div><div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">M</span> &nbsp;→ Students</div></div>
+          <div class="step-ans" style="border-color:#34A853"><div class="step-ans-label">文型</div><div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">SVO</span></div></div>
+        </div>
+        <div class="reasoning">
+          名詞 <em>Students</em> の直後 → 形容詞句（後置修飾）。ブロックを外すと「Students improve their vocabulary」。S=Students、V=improve、O=their vocabulary → SVO。
+        </div>
+      </div>
+    </div>
+
+    <div class="problem-card" id="p6">
+      <div class="problem-header" onclick="toggle('p6')">
+        <div class="problem-num" style="background:#34A853">(6)</div>
+        <div class="problem-sentence">Reading English books every day, you can improve your vocabulary.</div>
+        <div class="problem-tags">
+          <span class="tag adv">副詞句</span>
+          <span class="tag role">M → can improve</span>
+        </div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="problem-body">
+        <div class="sentence-display">
+          <span class="chunk adv-chunk">[Reading English books every day,]</span>
+          &nbsp;you &nbsp;<span class="v-mark">can improve</span><span class="v-sub">V</span>&nbsp;your vocabulary.
+        </div>
+        <div class="steps-answer">
+          <div class="step-ans" style="border-color:#FBBC04"><div class="step-ans-label">用法</div><div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">副詞句</span></div></div>
+          <div class="step-ans" style="border-color:#FBBC04"><div class="step-ans-label">役割 / 修飾先</div><div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">M</span> &nbsp;→ can improve</div></div>
+          <div class="step-ans" style="border-color:#34A853"><div class="step-ans-label">文型</div><div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">SVO</span></div></div>
+        </div>
+        <div class="reasoning">
+          文頭＋コンマ → 副詞句（分詞構文）。ブロックを外すと「you can improve your vocabulary」。S=you、V=can improve、O=your vocabulary → SVO。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SET 3 -->
+  <div id="set3" class="section">
+    <div class="section-title">
+      <span style="background:#FBBC04;color:#fff;border-radius:8px;padding:4px 12px;font-size:14px;">セット3</span>
+      Working from home
+    </div>
+
+    <div class="problem-card" id="p7">
+      <div class="problem-header" onclick="toggle('p7')">
+        <div class="problem-num" style="background:#FBBC04">(7)</div>
+        <div class="problem-sentence">Working from home has become common in many industries.</div>
+        <div class="problem-tags">
+          <span class="tag noun">名詞句</span>
+          <span class="tag role">S → SVC</span>
+        </div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="problem-body">
+        <div class="sentence-display">
+          <span class="chunk">[Working from home]</span>
+          &nbsp;<span class="v-mark">has become</span><span class="v-sub">V</span>&nbsp;common in many industries.
+        </div>
+        <div class="steps-answer">
+          <div class="step-ans" style="border-color:#4285F4"><div class="step-ans-label">用法</div><div class="step-ans-val"><span class="chip" style="background:#E8F0FE;color:#4285F4">名詞句</span></div></div>
+          <div class="step-ans" style="border-color:#FBBC04"><div class="step-ans-label">役割 / 修飾先</div><div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">S</span> &nbsp;修飾先：なし</div></div>
+          <div class="step-ans" style="border-color:#34A853"><div class="step-ans-label">文型</div><div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">SVC</span></div></div>
+        </div>
+        <div class="reasoning">
+          文頭の動名詞句 → 主語（S）。V=has become（完了形）、C=common → SVC。<em>in many industries</em> は副詞句でM。
+        </div>
+      </div>
+    </div>
+
+    <div class="problem-card" id="p8">
+      <div class="problem-header" onclick="toggle('p8')">
+        <div class="problem-num" style="background:#FBBC04">(8)</div>
+        <div class="problem-sentence">Employees working from home often save time on commuting.</div>
+        <div class="problem-tags">
+          <span class="tag adj">形容詞句</span>
+          <span class="tag role">M → Employees</span>
+        </div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="problem-body">
+        <div class="sentence-display">
+          Employees <span class="chunk adj-chunk">[working from home]</span>
+          &nbsp;often &nbsp;<span class="v-mark">save</span><span class="v-sub">V</span>&nbsp;time on commuting.
+        </div>
+        <div class="steps-answer">
+          <div class="step-ans" style="border-color:#34A853"><div class="step-ans-label">用法</div><div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">形容詞句</span></div></div>
+          <div class="step-ans" style="border-color:#FBBC04"><div class="step-ans-label">役割 / 修飾先</div><div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">M</span> &nbsp;→ Employees</div></div>
+          <div class="step-ans" style="border-color:#34A853"><div class="step-ans-label">文型</div><div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">SVO</span></div></div>
+        </div>
+        <div class="reasoning">
+          名詞 <em>Employees</em> の直後 → 形容詞句。ブロック除去後「Employees save time on commuting」。S=Employees、V=save、O=time → SVO。<em>often / on commuting</em> はM。
+        </div>
+      </div>
+    </div>
+
+    <div class="problem-card" id="p9">
+      <div class="problem-header" onclick="toggle('p9')">
+        <div class="problem-num" style="background:#FBBC04">(9)</div>
+        <div class="problem-sentence">Working from home, you can save time on commuting.</div>
+        <div class="problem-tags">
+          <span class="tag adv">副詞句</span>
+          <span class="tag role">M → can save</span>
+        </div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="problem-body">
+        <div class="sentence-display">
+          <span class="chunk adv-chunk">[Working from home,]</span>
+          &nbsp;you &nbsp;<span class="v-mark">can save</span><span class="v-sub">V</span>&nbsp;time on commuting.
+        </div>
+        <div class="steps-answer">
+          <div class="step-ans" style="border-color:#FBBC04"><div class="step-ans-label">用法</div><div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">副詞句</span></div></div>
+          <div class="step-ans" style="border-color:#FBBC04"><div class="step-ans-label">役割 / 修飾先</div><div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">M</span> &nbsp;→ can save</div></div>
+          <div class="step-ans" style="border-color:#34A853"><div class="step-ans-label">文型</div><div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">SVO</span></div></div>
+        </div>
+        <div class="reasoning">
+          文頭＋コンマ → 副詞句（分詞構文）。主節「you can save time on commuting」。S=you、V=can save、O=time → SVO。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 3 演習 -->
+  <div class="section">
+    <div class="section-title">
+      <span style="background:#EA4335;color:#fff;border-radius:8px;padding:4px 12px;font-size:14px;">第3部</span>
+      演習　問1〜10
+    </div>
+
+    <!-- 問1 -->
+    <div class="problem-card" id="ex1">
+      <div class="problem-header" onclick="toggle('ex1')">
+        <div class="problem-num" style="background:#EA4335">1</div>
+        <div class="problem-sentence">Studying abroad gives students a broader perspective.</div>
+        <div class="problem-tags"><span class="tag noun">名詞句</span><span class="tag role">S → SVOO</span></div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="problem-body">
+        <div class="sentence-display">
+          <span class="chunk">[Studying abroad]</span>
+          &nbsp;<span class="v-mark">gives</span><span class="v-sub">V</span>&nbsp;students a broader perspective.
+        </div>
+        <div class="steps-answer">
+          <div class="step-ans" style="border-color:#4285F4"><div class="step-ans-label">用法</div><div class="step-ans-val"><span class="chip" style="background:#E8F0FE;color:#4285F4">名詞句</span></div></div>
+          <div class="step-ans" style="border-color:#FBBC04"><div class="step-ans-label">役割 / 修飾先</div><div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">S</span></div></div>
+          <div class="step-ans" style="border-color:#34A853"><div class="step-ans-label">文型</div><div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">SVOO</span></div></div>
+        </div>
+        <div class="reasoning">
+          文頭の動名詞句 → 主語（S）。V=gives、O₁=students、O₂=a broader perspective → <strong>SVOO</strong>（give O₁ O₂ の構文）。
+        </div>
+      </div>
+    </div>
+
+    <!-- 問2 -->
+    <div class="problem-card" id="ex2">
+      <div class="problem-header" onclick="toggle('ex2')">
+        <div class="problem-num" style="background:#EA4335">2</div>
+        <div class="problem-sentence">The book written by this author became a bestseller.</div>
+        <div class="problem-tags"><span class="tag adj">形容詞句</span><span class="tag role">M → book</span></div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="problem-body">
+        <div class="sentence-display">
+          The book <span class="chunk adj-chunk">[written by this author]</span>
+          &nbsp;<span class="v-mark">became</span><span class="v-sub">V</span>&nbsp;a bestseller.
+        </div>
+        <div class="steps-answer">
+          <div class="step-ans" style="border-color:#34A853"><div class="step-ans-label">用法</div><div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">形容詞句</span></div></div>
+          <div class="step-ans" style="border-color:#FBBC04"><div class="step-ans-label">役割 / 修飾先</div><div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">M</span> → book</div></div>
+          <div class="step-ans" style="border-color:#34A853"><div class="step-ans-label">文型</div><div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">SVC</span></div></div>
+        </div>
+        <div class="reasoning">
+          過去分詞句 <em>written by this author</em> が名詞 <em>book</em> の直後 → 形容詞句（後置修飾）。ブロック除去後「The book became a bestseller」。V=became、C=a bestseller → SVC。
+          <div class="note-box">💡 過去分詞の形容詞句は「受け身の意味」で後ろの名詞を修飾する。「この著者によって書かれた本」。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 問3 -->
+    <div class="problem-card" id="ex3">
+      <div class="problem-header" onclick="toggle('ex3')">
+        <div class="problem-num" style="background:#EA4335">3</div>
+        <div class="problem-sentence">Children playing in the park seemed very excited.</div>
+        <div class="problem-tags"><span class="tag adj">形容詞句</span><span class="tag role">M → Children</span></div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="problem-body">
+        <div class="sentence-display">
+          Children <span class="chunk adj-chunk">[playing in the park]</span>
+          &nbsp;<span class="v-mark">seemed</span><span class="v-sub">V</span>&nbsp;very excited.
+        </div>
+        <div class="steps-answer">
+          <div class="step-ans" style="border-color:#34A853"><div class="step-ans-label">用法</div><div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">形容詞句</span></div></div>
+          <div class="step-ans" style="border-color:#FBBC04"><div class="step-ans-label">役割 / 修飾先</div><div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">M</span> → Children</div></div>
+          <div class="step-ans" style="border-color:#34A853"><div class="step-ans-label">文型</div><div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">SVC</span></div></div>
+        </div>
+        <div class="reasoning">
+          名詞 <em>Children</em> の直後に現在分詞句 → 形容詞句。ブロック除去後「Children seemed very excited」。V=seemed、C=very excited（形容詞）→ SVC。
+        </div>
+      </div>
+    </div>
+
+    <!-- 問4 -->
+    <div class="problem-card" id="ex4">
+      <div class="problem-header" onclick="toggle('ex4')">
+        <div class="problem-num" style="background:#EA4335">4</div>
+        <div class="problem-sentence">Walking along the river, I found a small cafe.</div>
+        <div class="problem-tags"><span class="tag adv">副詞句</span><span class="tag role">M → found</span></div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="problem-body">
+        <div class="sentence-display">
+          <span class="chunk adv-chunk">[Walking along the river,]</span>
+          &nbsp;I &nbsp;<span class="v-mark">found</span><span class="v-sub">V</span>&nbsp;a small cafe.
+        </div>
+        <div class="steps-answer">
+          <div class="step-ans" style="border-color:#FBBC04"><div class="step-ans-label">用法</div><div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">副詞句</span></div></div>
+          <div class="step-ans" style="border-color:#FBBC04"><div class="step-ans-label">役割 / 修飾先</div><div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">M</span> → found</div></div>
+          <div class="step-ans" style="border-color:#34A853"><div class="step-ans-label">文型</div><div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">SVO</span></div></div>
+        </div>
+        <div class="reasoning">
+          文頭＋コンマ → 副詞句（分詞構文）。主節「I found a small cafe」。S=I、V=found、O=a small cafe → SVO。「川沿いを歩きながら」という状況を表す。
+        </div>
+      </div>
+    </div>
+
+    <!-- 問5 -->
+    <div class="problem-card" id="ex5">
+      <div class="problem-header" onclick="toggle('ex5')">
+        <div class="problem-num" style="background:#EA4335">5</div>
+        <div class="problem-sentence">To master English requires consistent daily effort.</div>
+        <div class="problem-tags"><span class="tag noun">名詞句</span><span class="tag role">S → SVO</span></div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="problem-body">
+        <div class="sentence-display">
+          <span class="chunk">[To master English]</span>
+          &nbsp;<span class="v-mark">requires</span><span class="v-sub">V</span>&nbsp;consistent daily effort.
+        </div>
+        <div class="steps-answer">
+          <div class="step-ans" style="border-color:#4285F4"><div class="step-ans-label">用法</div><div class="step-ans-val"><span class="chip" style="background:#E8F0FE;color:#4285F4">名詞句</span></div></div>
+          <div class="step-ans" style="border-color:#FBBC04"><div class="step-ans-label">役割 / 修飾先</div><div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">S</span></div></div>
+          <div class="step-ans" style="border-color:#34A853"><div class="step-ans-label">文型</div><div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">SVO</span></div></div>
+        </div>
+        <div class="reasoning">
+          文頭のto不定詞句が主語の位置 → 名詞句。V=requires、O=consistent daily effort → SVO。
+          <div class="note-box">💡 to不定詞が文頭にある場合も動名詞と同様に名詞句として主語になれる。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 問6 -->
+    <div class="problem-card" id="ex6">
+      <div class="problem-header" onclick="toggle('ex6')">
+        <div class="problem-num" style="background:#EA4335">6</div>
+        <div class="problem-sentence">The man standing at the gate is our new teacher.</div>
+        <div class="problem-tags"><span class="tag adj">形容詞句</span><span class="tag role">M → man</span></div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="problem-body">
+        <div class="sentence-display">
+          The man <span class="chunk adj-chunk">[standing at the gate]</span>
+          &nbsp;<span class="v-mark">is</span><span class="v-sub">V</span>&nbsp;our new teacher.
+        </div>
+        <div class="steps-answer">
+          <div class="step-ans" style="border-color:#34A853"><div class="step-ans-label">用法</div><div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">形容詞句</span></div></div>
+          <div class="step-ans" style="border-color:#FBBC04"><div class="step-ans-label">役割 / 修飾先</div><div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">M</span> → man</div></div>
+          <div class="step-ans" style="border-color:#34A853"><div class="step-ans-label">文型</div><div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">SVC</span></div></div>
+        </div>
+        <div class="reasoning">
+          名詞 <em>man</em> の直後に現在分詞句 → 形容詞句。ブロック除去後「The man is our new teacher」。V=is、C=our new teacher（名詞） → SVC。
+          <div class="mistake-box">
+            <strong>✕ よくある誤り：standing を V と判断する</strong>
+            standing は現在分詞として名詞を修飾する形容詞句。文全体のV は <strong>is</strong>。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 問7 -->
+    <div class="problem-card" id="ex7">
+      <div class="problem-header" onclick="toggle('ex7')">
+        <div class="problem-num" style="background:#EA4335">7</div>
+        <div class="problem-sentence">Surprised by the news, she remained silent for a while.</div>
+        <div class="problem-tags"><span class="tag adv">副詞句</span><span class="tag role">M → remained</span></div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="problem-body">
+        <div class="sentence-display">
+          <span class="chunk adv-chunk">[Surprised by the news,]</span>
+          &nbsp;she &nbsp;<span class="v-mark">remained</span><span class="v-sub">V</span>&nbsp;silent for a while.
+        </div>
+        <div class="steps-answer">
+          <div class="step-ans" style="border-color:#FBBC04"><div class="step-ans-label">用法</div><div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">副詞句</span></div></div>
+          <div class="step-ans" style="border-color:#FBBC04"><div class="step-ans-label">役割 / 修飾先</div><div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">M</span> → remained</div></div>
+          <div class="step-ans" style="border-color:#34A853"><div class="step-ans-label">文型</div><div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">SVC</span></div></div>
+        </div>
+        <div class="reasoning">
+          文頭の過去分詞句＋コンマ → 副詞句（分詞構文）。主節「she remained silent for a while」。V=remained、C=silent（形容詞）→ SVC。
+          <div class="note-box">💡 過去分詞で始まる分詞構文は「〜されて（理由・状態）」という受け身の意味を添える。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 問8 -->
+    <div class="problem-card" id="ex8">
+      <div class="problem-header" onclick="toggle('ex8')">
+        <div class="problem-num" style="background:#EA4335">8</div>
+        <div class="problem-sentence">Solving this problem quickly will save us a lot of time.</div>
+        <div class="problem-tags"><span class="tag noun">名詞句</span><span class="tag role">S → SVOO</span></div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="problem-body">
+        <div class="sentence-display">
+          <span class="chunk">[Solving this problem quickly]</span>
+          &nbsp;<span class="v-mark">will save</span><span class="v-sub">V</span>&nbsp;us a lot of time.
+        </div>
+        <div class="steps-answer">
+          <div class="step-ans" style="border-color:#4285F4"><div class="step-ans-label">用法</div><div class="step-ans-val"><span class="chip" style="background:#E8F0FE;color:#4285F4">名詞句</span></div></div>
+          <div class="step-ans" style="border-color:#FBBC04"><div class="step-ans-label">役割 / 修飾先</div><div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">S</span></div></div>
+          <div class="step-ans" style="border-color:#34A853"><div class="step-ans-label">文型</div><div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">SVOO</span></div></div>
+        </div>
+        <div class="reasoning">
+          文頭の動名詞句 → 主語（S）。V=will save（助動詞＋V）、O₁=us、O₂=a lot of time → SVOO（save O₁ O₂ の構文）。
+        </div>
+      </div>
+    </div>
+
+    <!-- 問9 -->
+    <div class="problem-card" id="ex9">
+      <div class="problem-header" onclick="toggle('ex9')">
+        <div class="problem-num" style="background:#EA4335">9</div>
+        <div class="problem-sentence">The method used by the coach proved highly effective.</div>
+        <div class="problem-tags"><span class="tag adj">形容詞句</span><span class="tag role">M → method</span></div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="problem-body">
+        <div class="sentence-display">
+          The method <span class="chunk adj-chunk">[used by the coach]</span>
+          &nbsp;<span class="v-mark">proved</span><span class="v-sub">V</span>&nbsp;highly effective.
+        </div>
+        <div class="steps-answer">
+          <div class="step-ans" style="border-color:#34A853"><div class="step-ans-label">用法</div><div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">形容詞句</span></div></div>
+          <div class="step-ans" style="border-color:#FBBC04"><div class="step-ans-label">役割 / 修飾先</div><div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">M</span> → method</div></div>
+          <div class="step-ans" style="border-color:#34A853"><div class="step-ans-label">文型</div><div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">SVC</span></div></div>
+        </div>
+        <div class="reasoning">
+          名詞 <em>method</em> の直後に過去分詞句 → 形容詞句（後置修飾）。ブロック除去後「The method proved highly effective」。V=proved（「〜と判明した」）、C=highly effective（形容詞）→ SVC。
+        </div>
+      </div>
+    </div>
+
+    <!-- 問10 -->
+    <div class="problem-card" id="ex10">
+      <div class="problem-header" onclick="toggle('ex10')">
+        <div class="problem-num" style="background:#EA4335">10</div>
+        <div class="problem-sentence">Having finished his homework, he went out to play soccer.</div>
+        <div class="problem-tags"><span class="tag adv">副詞句</span><span class="tag role">M → went out</span></div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="problem-body">
+        <div class="sentence-display">
+          <span class="chunk adv-chunk">[Having finished his homework,]</span>
+          &nbsp;he &nbsp;<span class="v-mark">went out</span><span class="v-sub">V</span>&nbsp;to play soccer.
+        </div>
+        <div class="steps-answer">
+          <div class="step-ans" style="border-color:#FBBC04"><div class="step-ans-label">用法</div><div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">副詞句</span></div></div>
+          <div class="step-ans" style="border-color:#FBBC04"><div class="step-ans-label">役割 / 修飾先</div><div class="step-ans-val"><span class="chip" style="background:#FEF7E0;color:#7a5c00">M</span> → went out</div></div>
+          <div class="step-ans" style="border-color:#34A853"><div class="step-ans-label">文型</div><div class="step-ans-val"><span class="chip" style="background:#E6F4EA;color:#34A853">SV</span></div></div>
+        </div>
+        <div class="reasoning">
+          文頭＋コンマ → 副詞句（完了分詞構文）。主節「he went out to play soccer」。S=he、V=went out → SV。<em>to play soccer</em> はV を修飾する副詞句（目的）でM。
+          <div class="note-box">💡 <strong>Having + 過去分詞</strong> は「完了分詞構文」。主節の動作より前に完了した動作を表す。「宿題をすでに終えていたので」というニュアンス。</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /section -->
+
+</main>
+
+<script>
+function toggle(id) {
+  const card = document.getElementById(id);
+  card.classList.toggle('open');
+}
+function setActive(el) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// Highlight nav on scroll
+const sections = ['rules','set1','set2','set3','ex1','ex2','ex3','ex4','ex5','ex6','ex7','ex8','ex9','ex10'];
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const href = '#' + e.target.id;
+      document.querySelectorAll('.nav-item').forEach(n => {
+        n.classList.toggle('active', n.getAttribute('href') === href);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+sections.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) observer.observe(el);
+});
+</script>
+</body>
+</html>
